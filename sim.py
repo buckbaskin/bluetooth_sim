@@ -1,6 +1,7 @@
 import json
 import math
 import paho.mqtt.client as MQTT
+import random
 import time
 
 c = MQTT.Client()
@@ -60,6 +61,7 @@ class Lampi(object):
         return rssi
 
     def publish_rssi(self, rssi):
+        rssi += random.randint(-5, 5) # add +- 5 to rssi
         peripheral = {
             'id': 'Track this Device',
             'address': '',
