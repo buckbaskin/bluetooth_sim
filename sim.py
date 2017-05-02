@@ -28,7 +28,7 @@ class Sim(object):
     def run(self):
         while True:
             time.sleep(1.0) # secs
-            print('Run simulation step')
+            print('Run simulation step. Actual position: <%.2f, %.2f, %.2f>' % (self.device_x, self.device_y, self.device_z,))
             global new_device_x
             global new_device_y
             global new_device_z
@@ -92,7 +92,7 @@ class Lampi(object):
 
         dist = math.sqrt(dx * dx + dy * dy + dz * dz)
         rssi = self.rssi_from_distance(dist)
-        print('lampi update %s %s -> %s' % (self.device_id, dist, rssi,))
+        # print('lampi update %s %s -> %s' % (self.device_id, dist, rssi,))
         self.publish_rssi(rssi)
 
 if __name__ == '__main__':
