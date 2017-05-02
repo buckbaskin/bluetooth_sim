@@ -1,6 +1,7 @@
+import json
 import math
-import time
 import paho.mqtt.client as MQTT
+import time
 
 c = MQTT.Client()
 
@@ -11,7 +12,7 @@ class Sim(object):
     def __init__(self, lampis):
         self.lampis = lampis
         self.device_x = 5.0
-        self.device_y = 5.0
+        self.device_y = 1.0
 
     def change_device_location(self, x, y):
         self.device_x = x
@@ -53,7 +54,28 @@ class Lampi(object):
         return -10 * n * math.log10(dist) + A
 
     def publish_rssi(self, rssi):
-        self.c.publish('/devices/' + self.device_id + '/rssi', str(rssi))
+        peripheral = {
+            'id': '<id?>',
+            'address': '',
+            'addressType': '',
+            'connectable': 'True',
+            'advertisement': {
+                'localName': '<name>',
+                'txPowerLevel': 0,
+                'serviceUuids': ['1234'],
+                'serviceSolicitationUuid': [''],
+                'manufacturerData': '',
+                'serviceData': [
+                    {
+                        'uuid': '12345',
+                        'data': ''
+                    }
+                ]
+            },
+            'rssi': rssi,
+        }
+        periph_json = json.dumps(peripheral)
+        self.c.publish('/devices/' + self.device_id + '/rssi', periph_json)
 
     def update(self, device_x, device_y):
         print('lampi update')
