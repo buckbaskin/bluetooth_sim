@@ -44,8 +44,21 @@ class Lampi(object):
 
         return -10 * n * math.log10(dist) + A
 
+    def publish_rssi(self, rssi):
+        pass
+
     def update(self, device_x, device_y):
         dx = device_x - self.x
         dy = deivce_y - self.y
 
         dist = math.sqrt(dx * dx + dy * dy)
+        rssi = self.rssi_from_distance(dist)
+        self.publish_rssi(rssi)
+
+if __name__ == '__main__':
+    s = Sim([
+        Lampi(0.0, 0.0),
+        Lampi(0.0, 10.0),
+        Lampi(6.0, 0.0),
+    ])
+    s.run()
